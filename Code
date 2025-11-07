@@ -1,1 +1,21 @@
+import pandas as pd
+import numpy as np
+import pearsonr from scripy.stats
+import matplotlib.pyplot as plt
+accidents_df = pd.read_csv('Downloads/US_Accidents_March23.csv') 
+adas_df = pd.read_csv('Downloads/ADAS.csv')
+print("ADAS dataset shape:", adas_df.shape)
+print(type(adas_df))
+print(adas_df.shape)
+adas_df.head()
+print(adas_df.info())
+adas_df = pd.read_csv("Downloads/ADAS.csv", nrows=1000)
+adas_df.info()
+adas_df.head()
+adas_df.describe()
+accidents_df.head()
+accidents_df.describe()
+adas_df.isnull().sum()  # Count missing (NaN) values per column
+missing_percent = (adas_df.isnull().sum() / len(adas_df)) * 100  # Show missing value percentages
+print(missing_percent)
 
