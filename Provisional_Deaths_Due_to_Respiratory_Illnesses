@@ -1,0 +1,77 @@
+import pandas as pd
+from scipy.stats import pearsonr
+import matplotlib.pyplot as plt
+import numpy as np
+
+resp_df = pd.read_csv('C:\Air\Provisional_Deaths_Due_to_Respiratory_Illnesses.csv')
+print("Respiratory dataset shape:", resp_df.shape)
+print(type(resp_df))
+print(resp_df.shape)
+
+resp_df.head()
+
+resp_df = pd.read_csv("C:\Air\Provisional_Deaths_Due_to_Respiratory_Illnesses.csv", nrows=1000)
+resp_df.info()
+
+resp_df.describe()
+
+# Count missing (NaN) values per column
+resp_df.isnull().sum()
+
+# Show missing value percentages
+missing_percent = (resp_df.isnull().sum() / len(resp_df)) * 100
+print(missing_percent)
+
+resp_df.isnull().sum()[resp_df.isnull().sum() > 0]
+
+resp_df = resp_df.dropna(axis=1, how='all')
+
+# Step 2: Check how severe the missing data is
+print("\n---- Missing Value Percentage ----")
+print((resp_df.isnull().sum() / len(resp_df) * 100).round(2))
+
+print(resp_df.dtypes)
+print(resp_df['disease'].unique())
+
+# Fix for text column
+if 'disease' in resp_df.columns:
+    resp_df['disease'] = resp_df['disease'].fillna(resp_df['disease'].mode()[0])
+    print("Filled missing values in 'disease' with the most frequent category.")
+
+# Example: Convert numeric columns stored as strings
+numeric_columns = ['disease']  # adjust as per your dataset
+for col in numeric_columns:
+    if col in resp_df.columns:
+        resp_df[col] = pd.to_numeric(resp_df[col], errors='coerce')
+        print(f"Converted '{col}' to numeric type.")
+
+# --- Identify Duplicates ---
+duplicate_count = resp_df.duplicated().sum()
+print(f"\n---- Duplicate Rows Found: {duplicate_count} ----")
+
+# --- Remove Duplicates ---
+if duplicate_count > 0:
+    resp_df = resp_df.drop_duplicates()
+    print("Duplicate rows removed successfully.")
+
+# --- Verify ---
+print(f"Remaining rows after cleanup: {resp_df.shape[0]}")
+import seaborn as sns
+
+# --- Select numeric columns only ---
+numeric_cols = resp_df.select_dtypes(include=['float64', 'int64']).columns
+
+print(resp_df['disease'].describe())
+print(resp_df['disease'].unique())
+
+resp_df['disease'] = pd.to_numeric(resp_df['disease'], errors='coerce')
+print(resp_df['disease'].isna().sum())
+
+resp_df['disease'] = resp_df['disease'].astype('category').cat.codes
+
+plt.figure(figsize=(7,5))
+resp_df['disease'].value_counts().sort_index().plot(kind='bar', color='skyblue', edgecolor='black')
+plt.title('Frequency of Diseases (Numeric Codes)')
+plt.xlabel('Disease Code')
+plt.ylabel('Count')
+plt.show()
