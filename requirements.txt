@@ -1,0 +1,14 @@
+# Core Data Analysis and Manipulation
+pandas
+numpy
+
+# Statistical Analysis
+scipy
+statsmodels
+
+# Visualization
+matplotlib
+seaborn
+
+# Development Environment (for running notebooks)
+jupyter
