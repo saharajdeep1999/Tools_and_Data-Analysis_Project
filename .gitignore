@@ -1,0 +1,50 @@
+# ----------------------------------------------------------------
+# 1. Large Data Files (EXCLUDED as per submission requirements)
+# Data files must be stored externally and linked in the README.md.
+# The analysis relies on these, but they should NOT be committed.
+# ----------------------------------------------------------------
+*.csv
+*.xlsx
+*.zip
+*.json
+*.dat
+*.gz
+
+# ----------------------------------------------------------------
+# 2. Python Environment and Compile Artifacts
+# ----------------------------------------------------------------
+# Environments
+venv/
+env/
+.direnv/
+
+# Byte-compiled files
+__pycache__/
+*.pyc
+*.pyd
+*.so
+
+# ----------------------------------------------------------------
+# 3. Jupyter/Analysis Notebook Artifacts
+# ----------------------------------------------------------------
+.ipynb_checkpoints/
+# Temporary output files from plotting (if generated)
+*.html
+*.pdf
+*.svg
+*.png
+# Optionally ignore the output image files, but if the images
+# are small and necessary for the README.md, you may remove
+# the '*.png' and related lines.
+visualization*.png
+merged_data.ipynb
+# Assuming your main notebook is named Merged_Dataset (1).ipynb, 
+# you should commit it, but if it was named 'your_project.ipynb' 
+# as in the prompt, you would commit that.
+
+# ----------------------------------------------------------------
+# 4. Operating System and Editor Files
+# ----------------------------------------------------------------
+.DS_Store
+.vscode/
+Thumbs.db
