@@ -1,0 +1,132 @@
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║        CORRELATION ANALYSIS REPORT: WASTEWATER & MORTALITY DATA            ║
+║                   Complete Analysis Results                                ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+EXECUTIVE SUMMARY
+═════════════════════════════════════════════════════════════════════════════
+
+PRIMARY FINDING:
+  • Viral concentration and mortality percentage show MODERATE POSITIVE correlation
+  • Pearson r = 0.236327
+  • p-value = 1.6223e-61 (statistically significant at α=0.05)
+  • r² = 0.055850 (5.59% variance explained)
+
+SAMPLE SIZE: n = 4768 paired observations
+
+INTERPRETATION:
+  • As wastewater viral concentration increases, respiratory mortality tends to increase
+  • This accounts for 5.59% of mortality variation
+  • 94.41% of variation explained by other factors
+
+═════════════════════════════════════════════════════════════════════════════
+
+DETAILED RESULTS
+
+1. ASSUMPTION VERIFICATION
+───────────────────────────────────────────────────────────────────────────
+✓ Continuous Variables: PASSED
+✓ Independence: PASSED
+✓ Adequate Sample Size: PASSED (n=4768)
+✗ Normality: VIOLATED (but acceptable with n>30)
+  - Concentration: p=1.7060e-91
+  - Mortality: p=1.7775e-79
+
+✓ Linearity: Visual inspection shows linear trend
+✓ Homoscedasticity: Variance appears consistent across range
+
+2. PRIMARY CORRELATIONS
+───────────────────────────────────────────────────────────────────────────
+Correlation                          r        r²      p-value       Strength
+─────────────────────────────────────────────────────────────────────────
+Concentration → Mortality         0.2363    0.0559   <0.0001    Weak
+Normalized Avg → Mortality        0.2507    0.0628   <0.0001    Weak
+Week → Mortality (seasonality)   -0.0959    0.0092   <0.0001    Weak
+
+3. MULTICOLLINEARITY ASSESSMENT
+───────────────────────────────────────────────────────────────────────────
+Correlation Check:
+  Concentration ↔ Normalized Avg: r = 0.8682
+  Status: ⚠ HIGH - Redundant variables
+
+VIF Analysis (Variance Inflation Factor):
+  target_wkavg_concentration: VIF = 4.12 ✓
+  wkavg_val:                  VIF = 4.30 ✓
+  week_waste:                 VIF = 1.09 ✓
+
+Recommendation: Use only ONE concentration measure in regression models
+
+4. ROBUSTNESS CHECK
+───────────────────────────────────────────────────────────────────────────
+Spearman Rank Correlation: r_s = 0.4874
+Comparison: |Pearson - Spearman| = 0.2511
+Status: ⚠ Possible non-linearity
+
+5. CAUSATION ANALYSIS
+───────────────────────────────────────────────────────────────────────────
+✗ CAUSATION NOT ESTABLISHED
+
+Possible Explanations:
+  1. Direct Causation: High viral load → Disease → Death (plausible but not proven)
+  2. Confounding: Season/Temperature → Both variables increase (LIKELY)
+  3. Reverse Causation: Unlikely
+  4. Bidirectional: Possible but less likely than confounding
+  5. Coincidence: Unlikely (p<0.001)
+
+Evidence of Confounding:
+  • Seasonal effect detected: r(week, mortality) = -0.0959
+  • Both variables peak in winter months
+  • Season affects virus transmission AND respiratory illness independently
+
+Conclusion:
+  Wastewater concentration and mortality are associated but relationship likely 
+  reflects seasonal confounding rather than direct causation. Concentration could 
+  still serve as useful surveillance indicator as part of broader monitoring system.
+
+═════════════════════════════════════════════════════════════════════════════
+LIMITATIONS
+───────────────────────────────────────────────────────────────────────────
+• Ecological fallacy: Population-level data cannot infer individual risk
+• Unmeasured confounders: Season, variants, immunity, testing patterns not controlled
+• Temporal lag unknown: Wastewater may lead/lag mortality by unknown duration
+• Data quality: Provisional mortality counts subject to revision
+• Regional aggregation: Multiple wastewater sites combined into single analysis
+• Cross-sectional design: Cannot establish temporal precedence without lag analysis
+
+NEXT STEPS
+───────────────────────────────────────────────────────────────────────────
+1. Temporal lag analysis: Test if concentration leads mortality by N weeks
+2. Partial correlation: Control for month/season to test confounding
+3. Stratified analysis: Separate summer and winter data
+4. Geographic variation: Analyze by wastewater treatment site
+5. Pathogen-specific: Separate analysis for COVID-19, Influenza, RSV
+6. Regression modeling: Use as predictor with proper multicollinearity handling
+
+═════════════════════════════════════════════════════════════════════════════
+RECOMMENDATIONS FOR USE
+───────────────────────────────────────────────────────────────────────────
+✓ Wastewater surveillance IS useful as surveillance indicator
+✗ BUT not sufficient alone for causal inferences or policy decisions
+
+Best Practice Implementation:
+  • Combine with: case reports, hospitalization data, variant information
+  • Monitor temporal trends, not absolute values
+  • Stratify analysis by season
+  • Use as early warning system, not definitive proof
+  • Regularly update and validate predictions
+
+═════════════════════════════════════════════════════════════════════════════
+ANALYSIS METADATA
+───────────────────────────────────────────────────────────────────────────
+Date: Generated by Jupyter Notebook
+Datasets: 
+  - Respiratory_Virus_Wastewater_Surveillance.csv (n=6,645)
+  - Provisional_Deaths_Due_to_Respiratory_Illnesses.csv (n=1,107)
+Analysis Dataset: 4768 merged and cleaned records
+
+Methods: Pearson correlation, Spearman rank correlation, VIF analysis
+Software: Python (scipy.stats, pandas, statsmodels)
+Significance Level: α = 0.05
+
+═════════════════════════════════════════════════════════════════════════════

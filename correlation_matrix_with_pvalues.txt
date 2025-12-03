@@ -1,0 +1,12 @@
+CORRELATION MATRIX WITH P-VALUES
+
+target_wkavg_concentration          vs target_wkavg_concentration         : r=1.0000 (perfect)
+target_wkavg_concentration          vs wkavg_val                          : r= 0.8682, p=0.0000e+00
+target_wkavg_concentration          vs week_waste                         : r=-0.0191, p=1.8843e-01
+target_wkavg_concentration          vs percent                            : r= 0.2363, p=1.6223e-61
+wkavg_val                           vs wkavg_val                          : r=1.0000 (perfect)
+wkavg_val                           vs week_waste                         : r=-0.0336, p=2.0219e-02
+wkavg_val                           vs percent                            : r= 0.2507, p=3.1473e-69
+week_waste                          vs week_waste                         : r=1.0000 (perfect)
+week_waste                          vs percent                            : r=-0.0959, p=3.2153e-11
+percent                             vs percent                            : r=1.0000 (perfect)
